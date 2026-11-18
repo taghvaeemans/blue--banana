@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>موز آبی 🍌 بازی انعطاف‌پذیری ذهن</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap">
+<style>
+:root{--bg1:#ffe4f1;--bg2:#fff3c4;--bg3:#d4f4ff;--card:#fff;--ink:#2a2352;--mute:#6d6590;--pri:#7c4dff;--ok:#16c47f;--bad:#ff4d6d;--warn:#ffb020;--line:#e6defa;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a1740;--bg2:#1f2250;--bg3:#12324a;--card:#2c2658;--ink:#f6f1ff;--mute:#b9b0e0;--line:#453d80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg1:#2a1740;--bg2:#1f2250;--bg3:#12324a;--card:#2c2658;--ink:#f6f1ff;--mute:#b9b0e0;--line:#453d80;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);min-height:100vh;background:linear-gradient(160deg,var(--bg1),var(--bg2) 50%,var(--bg3));background-attachment:fixed}
+#app{max-width:560px;margin:0 auto;padding:14px 14px 40px}
+.screen{display:none}.screen.on{display:block}
+h1{font-size:2.6rem;font-weight:900;margin:8px 0 4px;line-height:1.2}
+h1 .b{color:#2f7bff}h1 .y{color:#ffb800}
+.card{background:var(--card);border-radius:26px;padding:18px;border:3px solid var(--line);box-shadow:0 6px 0 var(--line)}
+.btn{font:inherit;font-weight:900;font-size:1.1rem;border:0;border-radius:18px;padding:13px 22px;color:#fff;background:var(--pri);box-shadow:0 5px 0 #5a32d6;cursor:pointer;transition:transform .08s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #5a32d6}
+.btn.g{background:var(--ok);box-shadow:0 5px 0 #0e9a61}.btn.g:active{box-shadow:0 1px 0 #0e9a61}
+.btn.o{background:var(--warn);color:#4a3000;box-shadow:0 5px 0 #c98400}.btn.o:active{box-shadow:0 1px 0 #c98400}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn:focus-visible,.tile:focus-visible,.mb:focus-visible{outline:4px solid #2f7bff;outline-offset:2px}
+.hero{text-align:center}
+.demo{display:flex;gap:10px;justify-content:center;margin:6px 0 12px}
+.demo .tile{width:128px}
+.how{line-height:1.9;font-size:.95rem;margin:0;padding-inline-start:20px}
+.how li{margin-bottom:6px}
+.modes{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.mb{font:inherit;color:#fff;border:0;border-radius:22px;padding:12px 14px;cursor:pointer;line-height:1.6;font-size:.85rem;display:flex;align-items:center;gap:12px;text-align:right;box-shadow:0 6px 0 rgba(0,0,0,.22);transition:transform .08s}
+.mb:active{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.22)}
+.mb b{display:block;font-size:1.2rem}.mb .e{font-size:2rem}
+.mb.s{background:#16c47f}.mb.c{background:#ff5c8a}.mb.h{background:#8b3dff}
+.tmset{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin:14px 0;font-weight:700;font-size:.88rem;background:var(--bg2);border-radius:18px;padding:10px 12px}
+.tmset .btn{padding:2px 16px;font-size:1.3rem;box-shadow:0 3px 0 #c98400}.tmset b{min-width:120px;text-align:center;font-size:1rem}
+.top{display:flex;justify-content:space-between;align-items:center;font-weight:900;margin-bottom:8px;gap:8px}
+.pill{background:var(--card);border:3px solid var(--line);border-radius:999px;padding:3px 12px;white-space:nowrap;font-size:.88rem}
+.skip{white-space:nowrap;font:inherit;font-size:.8rem;background:none;border:0;color:var(--mute);text-decoration:underline;cursor:pointer}
+.bar{height:14px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff4d6d,#ffb020,#16c47f);background-size:300% 100%;border-radius:99px}
+.prac{background:#fff3c4;color:#5a4300;border-radius:16px;padding:8px 12px;margin-bottom:10px;font-weight:700;font-size:.88rem;text-align:center}
+.rule{display:flex;gap:12px;align-items:center;border-radius:22px;padding:12px 14px;color:#fff;margin-bottom:12px;font-size:.93rem;line-height:1.7}
+.rule b{display:block;font-size:1.25rem}.rule .ico{font-size:2.2rem}
+.m-real{background:#ff5c8a}.m-shown{background:#2f7bff}.m-mix{background:#8b3dff}
+.clues{display:flex;gap:10px;margin-bottom:12px}
+.clues>div{flex:1;text-align:center;font-size:.8rem;font-weight:700;color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{font:inherit;color:var(--ink);background:var(--card);background:color-mix(in srgb,var(--c) 20%,var(--card));border:4px solid var(--c);border-radius:24px;padding:8px 4px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;transition:transform .1s;box-shadow:0 4px 0 rgba(0,0,0,.25);box-shadow:0 4px 0 color-mix(in srgb,var(--c) 70%,#000)}
+.tile .ic{width:74px;height:74px;border-radius:50%;padding:8px;background:#fff;background:radial-gradient(circle at 32% 28%,#fff 0,rgba(255,255,255,.2) 60%),color-mix(in srgb,var(--c) 14%,#fff)}
+.tile svg{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 1.5px rgba(40,20,80,.3))}
+.tile .nm{font-weight:900;font-size:.95rem}
+.tile u{text-decoration:none;font-size:.75rem;font-weight:700;background:var(--c);color:#1f2340;border-radius:99px;padding:0 10px}
+.clue.tile{cursor:default}.clue .ic{width:88px;height:88px}
+.m{fill:var(--f)}.s{fill:var(--d)}
+.tile.sel{transform:translateY(3px);box-shadow:0 0 0 5px #7c4dff;border-color:#7c4dff}
+.tile.ok{box-shadow:0 0 0 5px var(--ok)}.tile.bad{box-shadow:0 0 0 5px var(--bad);opacity:.7}.tile.miss{box-shadow:0 0 0 5px var(--warn);animation:pl .8s 2}
+.tile.ok::after,.tile.bad::after,.tile.miss::after{position:absolute;top:-8px;left:-6px;font-size:1.3rem}
+.tile.ok::after{content:"✅"}.tile.bad::after{content:"❌"}.tile.miss::after{content:"⭐"}
+@keyframes pl{50%{transform:scale(1.07)}}
+.acts{display:flex;gap:10px;margin-top:14px}.acts .btn{flex:1}
+.fb{margin-top:12px;line-height:1.8;font-size:.95rem}
+.fb strong{font-size:1.15rem}
+.big{font-size:3.4rem;font-weight:900;color:var(--pri)}
+.st{display:flex;align-items:center;gap:8px;margin:8px 0;font-weight:700;font-size:.9rem}
+.st span:first-child{width:96px;text-align:right}.st .tr{flex:1;height:14px;background:var(--line);border-radius:99px;overflow:hidden}
+.st .tr i{display:block;height:100%;border-radius:99px}
+.kg{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}.kg .tile{pointer-events:none;padding:6px 2px 8px;border-radius:18px;border-width:3px}.kg .tile .ic{width:58px;height:58px;padding:6px}.kg .tile .nm{font-size:.78rem}.kg .tile u{font-size:.68rem;padding:0 7px}
+.send{text-align:right;margin:14px 0;padding:12px;border:3px dashed var(--line);border-radius:20px}
+.send input,.send textarea{display:block;width:100%;font:inherit;font-size:.9rem;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:14px;padding:9px 12px;margin-top:8px}
+.send textarea{resize:none;line-height:1.8}
+.send input:focus-visible,.send textarea:focus-visible{outline:4px solid #2f7bff;outline-offset:2px}
+@media (max-width:350px){#app{padding:10px 8px 32px}.card{padding:12px}.top{gap:4px}.pill{padding:2px 8px;font-size:.78rem}.skip{font-size:.7rem}.tile .nm{font-size:.85rem}.tile .ic{width:64px;height:64px}.kg .tile .nm{font-size:.66rem}.kg .tile .ic{width:46px;height:46px;padding:4px}.kg .tile u{font-size:.6rem;padding:0 5px}.clue .ic{width:76px;height:76px}.demo .tile{width:110px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<section class="screen on" id="s0">
+  <div class="hero">
+    <div style="font-size:2.6rem">🍌💙🐋</div>
+    <h1><span class="b">موز</span> <span class="y">آبی!</span></h1>
+    <p style="color:var(--mute);margin:0 0 14px">ظاهر را نبین؛ ذهنت را به چالش بکش!</p>
+  </div>
+  <div class="card">
+    <div class="demo" id="demo"></div>
+    <ol class="how">
+      <li>رنگ همهٔ اشیا <b>اشتباه</b> است! موز آبی، نهنگ زرد…</li>
+      <li>در هر دور دو کارت راهنما می‌بینی و باید طبق <b>قانون بالای صفحه</b> کارت‌های درست را پیدا کنی. قانون هر دور عوض می‌شود.</li>
+      <li>مثال: راهنما «موز آبی» است. رنگ <b>واقعی</b> موز زرد است و رنگ <b>ظاهری</b>‌اش آبی. بسته به قانون، دنبال اشیای واقعاً زرد یا کارت‌هایی که ظاهراً آبی‌اند می‌گردی.</li>
+      <li>اول چند دور <b>تمرین</b> داری (بدون امتیاز و بدون وقت)، بعد بازی اصلی ۱۰ دور شروع می‌شود.</li>
+    </ol>
+    <p style="font-weight:900;text-align:center;margin:16px 0 0">حالت بازی را انتخاب کن:</p>
+    <div class="modes">
+      <button class="mb s" data-m="simple"><span class="e">🌱</span><span><b>ساده</b>قانون «رنگ واقعی» و «رنگ ظاهری» به‌نوبت.</span></button>
+      <button class="mb c" data-m="combo"><span class="e">🔥</span><span><b>ترکیبی — سطح ۱</b>قانون ترکیبی هم اضافه می‌شود. زمان هر دور مثل حالت ساده.</span></button>
+      <button class="mb h" data-m="hard"><span class="e">⚡</span><span><b>ترکیبی — سطح ۲</b>همان قانون‌های ترکیبی، اما با <u style="text-decoration:none;font-weight:900">زمان کمتر</u> برای فکر کردن.</span></button>
+      
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="s1">
+  <div class="top"><span class="pill" id="rd"></span><button class="skip" id="skip">رد کردن تمرین</button><span class="pill" id="sc"></span></div>
+  <div class="prac" id="prac">🎓 دور تمرینی: امتیاز و زمان ندارد و راهنمایی رایگان است.</div>
+  <div class="bar" id="bar"><i id="tb"></i></div>
+  <div class="rule" id="rule"></div>
+  <div class="clues"><div>راهنمای ۱<div id="c1"></div></div><div>راهنمای ۲<div id="c2"></div></div></div>
+  <div class="grid" id="grid"></div>
+  <div class="acts" id="acts">
+    <button class="btn o" id="hint">💡 راهنمایی</button>
+    <button class="btn g" id="ok">ثبت پاسخ ✔</button>
+  </div>
+  <div class="card fb" id="fb" hidden></div>
+</section>
+
+<section class="screen" id="sK">
+  <div class="card hero">
+    <div style="font-size:2.6rem">🎨</div>
+    <h1 style="font-size:1.7rem">رنگ واقعی اشیا</h1>
+    <p style="line-height:1.9;margin:0">قبل از تمرین، رنگ <b>واقعی</b> این شکل‌ها را ببین و به خاطر بسپار. در بازی همهٔ آن‌ها با رنگ اشتباه نمایش داده می‌شوند!</p>
+    <div class="grid kg" id="kg"></div>
+    <div class="acts"><button class="btn o" id="kback">بازگشت</button><button class="btn g" id="kgo">یاد گرفتم، شروع تمرین 🎓</button></div>
+  </div>
+</section>
+
+<section class="screen" id="sT">
+  <div class="card hero">
+    <div style="font-size:3.2rem">🎓➜🏁</div>
+    <h1 style="font-size:1.9rem">تمرین تمام شد، آفرین!</h1>
+    <p style="line-height:1.9">حالا بازی اصلی شروع می‌شود: <b>۱۰ دور</b> با زمان‌سنج و امتیاز. هر کارت درست ۱۰+، هر اشتباه ۵−، و دور بی‌نقص پاداش دارد.</p>
+    <button class="btn g" id="main">شروع بازی اصلی 🚀</button>
+  </div>
+</section>
+
+<section class="screen" id="s2">
+  <div class="card hero">
+    <div style="font-size:3rem" id="rk"></div>
+    <div class="big" id="fs"></div>
+    <p id="rt" style="font-weight:900;font-size:1.2rem;margin:0 0 4px"></p>
+    <p id="mn" style="color:var(--mute);margin:0 0 10px"></p>
+    <div id="stats"></div>
+    <p style="color:var(--mute);font-size:.88rem;line-height:1.8">اگر در یکی از قانون‌ها ضعیف‌تر بودی، یعنی هنگام عوض شدن قانون ذهنت کمی گیر کرده است. تمرین می‌کنی، سریع‌تر می‌شود!</p>
+    <div class="send">
+      <label for="nm2" style="font-weight:900">📨 ارسال نتیجه برای معلم</label>
+      <input id="nm2" maxlength="40" placeholder="نام و نام‌خانوادگی و کلاس (مثلاً: سارا احمدی، هشتم ۲)" autocomplete="name">
+      <textarea id="rep" readonly rows="10" aria-label="متن نتیجه"></textarea>
+      <div class="acts"><button class="btn g" id="shr">ارسال 📤</button><button class="btn o" id="cpy">کپی متن 📋</button></div>
+      <div id="smsg" style="font-size:.85rem;margin-top:6px;min-height:1.5em"></div>
+    </div>
+    <div class="acts"><button class="btn" id="again">دوباره، همین حالت 🔄</button><button class="btn o" id="chg">تغییر حالت</button></div>
+  </div>
+</section>
+</div>
+
+<script>
+const C={yellow:{n:'زرد',h:'#FFCE1F',k:'#D99A00'},blue:{n:'آبی',h:'#2F7BFF',k:'#1B4FC4'},red:{n:'قرمز',h:'#F0394F',k:'#B31E35'},green:{n:'سبز',h:'#2FCB6B',k:'#17924A'},orange:{n:'نارنجی',h:'#FF8A1F',k:'#D35F00'},purple:{n:'بنفش',h:'#8B4DFF',k:'#5E27C7'},pink:{n:'صورتی',h:'#FF6FB1',k:'#D13D86'}};
+const K=Object.keys(C),D='#2a2352';
+const P={
+banana:`<path class="m" d="M10 16c2 24 18 36 42 29 3-1 3-5 0-5-14 2-25-8-27-24-1-4-14-4-15 0z"/><path class="s" d="M10 16l-1-7 7-2 1 8z"/><path d="M14 22c4 14 14 22 28 21" stroke="#fff" stroke-opacity=".45" stroke-width="2.5" fill="none" stroke-linecap="round"/><path fill="#4a3320" d="M49 40h5l1 5-5 1z"/>`,
+sun:`<g class="s"><rect x="29" y="2" width="6" height="60" rx="3"/><rect x="29" y="2" width="6" height="60" rx="3" transform="rotate(45 32 32)"/><rect x="29" y="2" width="6" height="60" rx="3" transform="rotate(90 32 32)"/><rect x="29" y="2" width="6" height="60" rx="3" transform="rotate(135 32 32)"/></g><circle class="m" cx="32" cy="32" r="16"/><circle cx="26" cy="29" r="2.3" fill="${D}"/><circle cx="38" cy="29" r="2.3" fill="${D}"/><path d="M25 36q7 7 14 0" stroke="${D}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`,
+lemon:`<ellipse class="m" cx="32" cy="34" rx="25" ry="17" transform="rotate(-20 32 34)"/><circle class="s" cx="9" cy="43" r="3.5"/><circle class="s" cx="55" cy="25" r="3.5"/><ellipse cx="26" cy="27" rx="9" ry="3.5" fill="#fff" opacity=".4" transform="rotate(-20 26 27)"/>`,
+whale:`<path d="M26 22c0-6-4-8-6-12M26 22c0-6 4-8 6-12" stroke="#8fd8ff" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse class="m" cx="28" cy="40" rx="24" ry="16"/><path class="m" d="M48 38l12-14 2 9-6 6 6 7-2 8z"/><path class="s" d="M6 44c8 9 28 10 40 0-2 10-14 14-24 12-8-1-14-5-16-12z" opacity=".5"/><circle cx="15" cy="36" r="2.4" fill="${D}"/><path d="M10 42q5 3 9 0" stroke="${D}" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+drop:`<path class="m" d="M32 5C45 22 53 31 53 42a21 21 0 0 1-42 0c0-11 8-20 21-37z"/><path class="s" d="M53 42a21 21 0 0 1-30 19c14 0 26-9 20-30 6 6 10 12 10 11z" opacity=".5"/><path fill="#fff" opacity=".55" d="M20 42c0 6 3 10 8 12-5-4-8-8-8-12z"/>`,
+apple:`<path class="m" d="M32 20C24 12 10 16 10 32c0 14 10 26 22 24 12 2 22-10 22-24 0-16-14-20-22-12z"/><path d="M32 20c0-6 2-10 6-13" stroke="#6b4423" stroke-width="3.5" fill="none" stroke-linecap="round"/><path class="s" d="M37 12c6-4 12-2 14 2-6 4-12 2-14-2z"/><path fill="#fff" opacity=".5" d="M16 28c1-5 4-8 8-8-4 3-6 7-6 12z"/>`,
+strawberry:`<path class="m" d="M32 58C14 46 8 32 12 24c4-6 14-6 20-2 6-4 16-4 20 2 4 8-2 22-20 34z"/><g fill="#fff" opacity=".85"><ellipse cx="22" cy="32" rx="1.7" ry="2.5"/><ellipse cx="32" cy="30" rx="1.7" ry="2.5"/><ellipse cx="42" cy="32" rx="1.7" ry="2.5"/><ellipse cx="27" cy="42" rx="1.7" ry="2.5"/><ellipse cx="37" cy="42" rx="1.7" ry="2.5"/><ellipse cx="32" cy="50" rx="1.7" ry="2.5"/></g><path class="s" d="M18 22l7 5 7-9 7 9 7-5-4-9H22z"/>`,
+frog:`<ellipse class="m" cx="32" cy="40" rx="26" ry="18"/><circle class="m" cx="19" cy="23" r="11"/><circle class="m" cx="45" cy="23" r="11"/><circle cx="19" cy="23" r="6.5" fill="#fff"/><circle cx="45" cy="23" r="6.5" fill="#fff"/><circle cx="20" cy="24" r="3.2" fill="${D}"/><circle cx="44" cy="24" r="3.2" fill="${D}"/><path d="M17 44q15 11 30 0" stroke="${D}" stroke-width="3" fill="none" stroke-linecap="round"/><circle class="s" cx="13" cy="42" r="3" opacity=".6"/><circle class="s" cx="51" cy="42" r="3" opacity=".6"/>`,
+leaf:`<path class="m" d="M8 56C6 26 26 8 56 8c2 30-12 50-42 48z"/><path d="M10 54C26 38 38 26 50 14" stroke="#fff" stroke-opacity=".65" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M26 40l-2-12M36 30l-2-12M24 44l-12-2" stroke="#fff" stroke-opacity=".45" stroke-width="2" stroke-linecap="round"/>`,
+cactus:`<rect class="m" x="10" y="22" width="10" height="22" rx="5"/><rect class="m" x="10" y="36" width="20" height="9" rx="4.5"/><rect class="m" x="46" y="14" width="10" height="22" rx="5"/><rect class="m" x="34" y="28" width="22" height="9" rx="4.5"/><rect class="m" x="22" y="6" width="20" height="50" rx="10"/><path d="M27 18v8M37 18v8M32 34v8" stroke="#fff" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/><path fill="#c97b4a" d="M18 52h28l-3 11H21z"/>`,
+carrot:`<path class="m" d="M16 16c6-5 14-3 18 4l20 34c1 3-1 6-5 4L18 40c-7-5-7-19-2-24z"/><path d="M24 24l7 3M30 32l7 3M38 42l6 3" stroke="#fff" stroke-opacity=".5" stroke-width="2.4" stroke-linecap="round"/><path class="s" d="M16 14C12 8 12 4 16 1c3 3 3 8 0 13zM22 11C21 5 24 2 29 2c0 5-3 8-7 9zM14 20C8 18 5 14 6 9c5 1 8 5 8 11z"/>`,
+orange:`<circle class="m" cx="32" cy="36" r="23"/><path class="s" d="M32 14c4-7 11-9 15-6-2 7-9 9-15 6z"/><g fill="#000" opacity=".13"><circle cx="22" cy="34" r="1.4"/><circle cx="32" cy="42" r="1.4"/><circle cx="42" cy="34" r="1.4"/><circle cx="28" cy="52" r="1.4"/><circle cx="38" cy="50" r="1.4"/><circle cx="26" cy="24" r="1.4"/></g><path fill="#fff" opacity=".4" d="M16 30c1-7 6-12 12-13-6 3-10 8-12 13z"/>`,
+grapes:`<path d="M32 4v10" stroke="#6b4423" stroke-width="4" stroke-linecap="round"/><g class="m" stroke="var(--d)" stroke-width="1.5"><circle cx="20" cy="22" r="9"/><circle cx="32" cy="22" r="9"/><circle cx="44" cy="22" r="9"/><circle cx="26" cy="34" r="9"/><circle cx="38" cy="34" r="9"/><circle cx="32" cy="46" r="9"/></g><g fill="#fff" opacity=".5"><circle cx="17" cy="19" r="2.2"/><circle cx="29" cy="19" r="2.2"/><circle cx="41" cy="19" r="2.2"/><circle cx="23" cy="31" r="2.2"/><circle cx="35" cy="31" r="2.2"/><circle cx="29" cy="43" r="2.2"/></g>`,
+eggplant:`<path class="m" d="M16 28c-5 15 1 31 16 31s21-16 16-31L42 18H22z"/><path class="s" d="M20 18c2-6 8-8 12-8s10 2 12 8c-6 5-18 5-24 0z"/><path d="M32 10V3" stroke="#4a3320" stroke-width="4" stroke-linecap="round"/><path d="M22 34c-2 8 0 14 5 18" stroke="#fff" stroke-opacity=".5" stroke-width="3.5" fill="none" stroke-linecap="round"/>`,
+flamingo:`<path d="M26 50v12M34 50v12" stroke="${D}" stroke-width="2.6" stroke-linecap="round"/><path d="M42 32c10-4 8-20-2-20" stroke="var(--f)" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse class="m" cx="30" cy="40" rx="18" ry="12"/><circle class="m" cx="38" cy="12" r="6"/><path fill="${D}" d="M33 11l-9 3 9 3z"/><circle cx="39" cy="11" r="1.6" fill="${D}"/><path class="s" d="M16 40c7 8 18 8 25 0-4 10-20 10-25 0z"/>`,
+blossom:`<g class="m"><ellipse cx="32" cy="16" rx="10" ry="14"/><ellipse cx="32" cy="16" rx="10" ry="14" transform="rotate(72 32 32)"/><ellipse cx="32" cy="16" rx="10" ry="14" transform="rotate(144 32 32)"/><ellipse cx="32" cy="16" rx="10" ry="14" transform="rotate(216 32 32)"/><ellipse cx="32" cy="16" rx="10" ry="14" transform="rotate(288 32 32)"/></g><circle cx="32" cy="32" r="8" fill="#fff6d6"/><circle class="s" cx="32" cy="32" r="3.5"/>`
+};
+const O=[['موز','banana','yellow'],['خورشید','sun','yellow'],['لیمو','lemon','yellow'],['نهنگ','whale','blue'],['قطره آب','drop','blue'],['سیب','apple','red'],['توت‌فرنگی','strawberry','red'],['قورباغه','frog','green'],['برگ','leaf','green'],['کاکتوس','cactus','green'],['هویج','carrot','orange'],['پرتقال','orange','orange'],['انگور','grapes','purple'],['بادمجان','eggplant','purple'],['فلامینگو','flamingo','pink'],['شکوفه','blossom','pink']].map(([n,id,r])=>({n,id,r}));
+Object.assign(P,{
+sunflower:`<g class="s">${[18,54,90,126,162,198,234,270,306,342].map(a=>`<ellipse cx="32" cy="12" rx="6" ry="11" transform="rotate(${a} 32 32)"/>`).join('')}</g><g class="m">${[0,36,72,108,144,180,216,252,288,324].map(a=>`<ellipse cx="32" cy="13" rx="5.5" ry="10.5" transform="rotate(${a} 32 32)"/>`).join('')}</g><circle cx="32" cy="32" r="13" fill="#6b4423"/><circle cx="32" cy="32" r="8" fill="#4a3320"/><g fill="#8a5a2b"><circle cx="28" cy="29" r="1.4"/><circle cx="35" cy="30" r="1.4"/><circle cx="31" cy="36" r="1.4"/><circle cx="37" cy="36" r="1.4"/><circle cx="27" cy="35" r="1.4"/></g>`,
+chick:`<path class="s" d="M32 10c-2-5-6-6-8-4 3 0 5 1 8 4zM32 10c2-5 6-6 8-4-3 0-5 1-8 4z"/><ellipse class="m" cx="32" cy="40" rx="21" ry="18"/><circle class="m" cx="32" cy="24" r="15"/><ellipse class="s" cx="17" cy="42" rx="5" ry="10" transform="rotate(-15 17 42)"/><ellipse class="s" cx="47" cy="42" rx="5" ry="10" transform="rotate(15 47 42)"/><circle cx="25" cy="22" r="2.4" fill="${D}"/><circle cx="39" cy="22" r="2.4" fill="${D}"/><path fill="#ff8a1f" d="M27 27h10l-5 6z"/><path d="M26 57v5M38 57v5" stroke="#ff8a1f" stroke-width="3" stroke-linecap="round"/>`,
+blueberry:`<circle class="m" cx="40" cy="26" r="17"/><circle class="s" cx="40" cy="26" r="5.5"/><circle class="m" cx="26" cy="40" r="21"/><circle class="s" cx="26" cy="38" r="7"/><circle cx="26" cy="38" r="2.5" fill="#fff" opacity=".5"/><ellipse cx="16" cy="30" rx="6" ry="3.5" fill="#fff" opacity=".4" transform="rotate(-35 16 30)"/>`,
+tomato:`<path d="M32 20v-9" stroke="#4a3320" stroke-width="3.5" stroke-linecap="round"/><ellipse class="m" cx="32" cy="39" rx="26" ry="21"/><path fill="#fff" opacity=".4" d="M14 34c1-7 6-12 13-13-7 3-11 8-13 13z"/><g class="s">${[0,72,144,216,288].map(a=>`<ellipse cx="32" cy="26" rx="4.5" ry="9" transform="rotate(${a} 32 21)"/>`).join('')}</g><circle class="s" cx="32" cy="21" r="3"/>`,
+cucumber:`<g transform="rotate(-28 32 33)"><rect class="m" x="4" y="22" width="56" height="22" rx="11"/><rect class="s" x="4" y="36" width="56" height="8" rx="4" opacity=".45"/><g fill="#fff" opacity=".55"><circle cx="16" cy="28" r="1.6"/><circle cx="26" cy="30" r="1.6"/><circle cx="36" cy="28" r="1.6"/><circle cx="46" cy="30" r="1.6"/><circle cx="21" cy="35" r="1.6"/><circle cx="31" cy="36" r="1.6"/><circle cx="41" cy="35" r="1.6"/></g><path d="M14 26h34" stroke="#fff" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/></g>`,
+violet:`<g class="m">${[0,72,144,216,288].map(a=>`<circle cx="32" cy="18" r="11" transform="rotate(${a} 32 32)"/>`).join('')}</g><g class="s" opacity=".5">${[0,72,144,216,288].map(a=>`<ellipse cx="32" cy="22" rx="2" ry="5" transform="rotate(${a} 32 32)"/>`).join('')}</g><circle cx="32" cy="32" r="6.5" fill="#ffd23f"/><circle cx="32" cy="32" r="2.5" fill="#f59f00"/>`
+});
+O.length=0;
+O.push(...[['موز','banana','yellow'],['آفتابگردان','sunflower','yellow'],['جوجه','chick','yellow'],['نهنگ','whale','blue'],['بلوبری','blueberry','blue'],['گوجه‌فرنگی','tomato','red'],['توت‌فرنگی','strawberry','red'],['قورباغه','frog','green'],['خیار','cucumber','green'],['کاکتوس','cactus','green'],['هویج','carrot','orange'],['پرتقال','orange','orange'],['بادمجان','eggplant','purple'],['بنفشه','violet','purple'],['فلامینگو','flamingo','pink'],['شکوفه گیلاس','blossom','pink']].map(([n,id,r])=>({n,id,r})));
+const M={real:{t:'رنگ واقعی',ic:'🧠',d:'کارت‌هایی را بزن که رنگ واقعی‌شان با رنگ واقعیِ شیءِ هر یک از دو راهنما یکی است.'},
+shown:{t:'رنگ ظاهری',ic:'👁️',d:'کارت‌هایی را بزن که رنگ دیده‌شده‌شان با رنگ ظاهریِ یکی از دو راهنما یکی است.'},
+mix:{t:'ترکیبی',ic:'🌀',d:'دو دسته را بزن: ۱) اشیایی که واقعاً هم‌رنگِ رنگ واقعیِ راهنمای اول‌اند. ۲) کارت‌هایی که ظاهراً هم‌رنگِ رنگ ظاهریِ راهنمای دوم‌اند.'}};
+const PR={simple:['real','shown','real'],combo:['real','shown','mix','mix'],hard:['real','shown','mix','mix']};
+const MN={simple:'🌱 حالت ساده',combo:'🔥 ترکیبی — سطح ۱',hard:'⚡ ترکیبی — سطح ۲ (زمان کمتر)'};
+const $=s=>document.querySelector(s);
+const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+const svg=o=>`<svg viewBox="0 0 64 64" aria-hidden="true" style="--f:${C[o.s].h};--d:${C[o.s].k}">${P[o.id]}</svg>`;
+function tile(o,cls='',i=''){return `<button class="tile ${cls}" ${i!==''?`data-i="${i}"`:''} style="--c:${C[o.s].h}"><span class="ic">${svg(o)}</span><span class="nm">${o.n}</span><u>${C[o.s].n}</u></button>`}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));scrollTo(0,0)}
+const TOTAL=10;let S,R,tm,left,total,done,pr;
+
+$('#demo').innerHTML=tile({n:'موز',id:'banana',s:'blue'},'clue')+tile({n:'نهنگ',id:'whale',s:'yellow'},'clue');
+
+function target(mode,a,b,o){
+  if(mode==='real')return o.r===a.r||o.r===b.r;
+  if(mode==='shown')return o.s===a.s||o.s===b.s;
+  return o.r===a.r||o.s===b.s;
+}
+function make(mode){
+  for(let t=0;t<300;t++){
+    const [x,y]=shuf(O).slice(0,2);
+    if(x.r===y.r)continue;
+    const sa=rnd(K.filter(k=>k!==x.r)),sb=rnd(K.filter(k=>k!==y.r&&k!==sa));
+    const a={...x,s:sa},b={...y,s:sb};
+    const g=shuf(O.filter(o=>o!==x&&o!==y)).slice(0,12).map(o=>({...o,s:rnd(K.filter(k=>k!==o.r))}));
+    const T=g.filter(o=>target(mode,a,b,o)).length;
+    const traps=g.filter(o=>!target(mode,a,b,o)&&(o.s===sa||o.s===sb||o.r===a.r||o.r===b.r||o.r===sa||o.r===sb)).length;
+    const both=mode==='real'?g.some(o=>o.r===a.r)&&g.some(o=>o.r===b.r):mode==='shown'?g.some(o=>o.s===a.s)&&g.some(o=>o.s===b.s):g.some(o=>o.r===a.r)&&g.some(o=>o.s===b.s);
+    if(both&&T>=2&&T<=5&&traps>=3)return {a,b,g};
+  }
+  const [x,y]=[O[0],O[3]];
+  return {a:{...x,s:'blue'},b:{...y,s:'yellow'},g:shuf(O.filter(o=>o!==x&&o!==y)).slice(0,12).map(o=>({...o,s:rnd(K.filter(k=>k!==o.r))}))};
+}
+function explain(){
+  const {mode,a,b}=R,N=k=>C[k].n;
+  if(mode==='real')return `رنگ واقعی ${a.n} «${N(a.r)}» و رنگ واقعی ${b.n} «${N(b.r)}» است؛ پس اشیای واقعاً ${N(a.r)} یا واقعاً ${N(b.r)} درست‌اند.`;
+  if(mode==='shown')return `رنگ ظاهری راهنماها «${N(a.s)}» و «${N(b.s)}» است؛ پس کارت‌هایی که ظاهراً ${N(a.s)} یا ${N(b.s)} دیده می‌شوند درست‌اند.`;
+  return `رنگ واقعی ${a.n} «${N(a.r)}» است؛ پس اشیای واقعاً ${N(a.r)} درست‌اند. رنگ ظاهری راهنمای دوم «${N(b.s)}» است؛ پس کارت‌هایی که ظاهراً ${N(b.s)} هستند هم درست‌اند.`;
+}
+function start(m){S={m,ph:'p',p:0,r:0,score:0,streak:0,last:null,st:{real:[0,0],shown:[0,0],mix:[0,0]}};show('s1');next()}
+function next(){
+  let mode;
+  if(S.ph==='p'){
+    if(S.p>=PR[S.m].length){clearInterval(tm);return show('sT')}
+    mode=PR[S.m][S.p++];
+  }else{
+    if(S.r>=TOTAL)return end();
+    S.r++;
+    mode=S.m!=='simple'?(S.r%2?'mix':rnd(['real','shown'])):rnd(['real','shown'].filter(x=>x!==S.last));
+  }
+  S.last=mode;pr=S.ph==='p';
+  R={mode,...make(mode),sel:new Set(),hint:false};
+  R.T=R.g.map((o,i)=>target(mode,R.a,R.b,o)?i:-1).filter(i=>i>=0);
+  total=T(S.m,S.r);left=total;done=false;
+  $('#rd').textContent=pr?`🎓 تمرین ${fa(S.p)} از ${fa(PR[S.m].length)}`:`دور ${fa(S.r)} از ${fa(TOTAL)}`;
+  $('#prac').style.display=pr?'':'none';$('#bar').style.display=pr?'none':'';$('#skip').style.display=pr?'':'none';
+  $('#hint').textContent=pr?'💡 راهنمایی (رایگان)':'💡 راهنمایی (−۵)';
+  $('#rule').className='rule m-'+mode;
+  $('#rule').innerHTML=`<span class="ico">${M[mode].ic}</span><div><b>قانون: ${M[mode].t}</b>${M[mode].d}</div>`;
+  $('#c1').innerHTML=tile(R.a,'clue');$('#c2').innerHTML=tile(R.b,'clue');
+  $('#grid').innerHTML=R.g.map((o,i)=>tile(o,'',i)).join('');
+  $('#fb').hidden=true;$('#acts').style.display='flex';$('#hint').disabled=false;
+  upd();clearInterval(tm);if(!pr)tm=setInterval(tick,100);
+}
+function upd(){$('#sc').textContent=pr?'بدون امتیاز':`⭐ ${fa(S.score)}`;$('#tb').style.width=(left/total*100)+'%'}
+function tick(){left-=.1;if(left<=0){left=0;upd();confirm_()}else upd()}
+$('#grid').addEventListener('click',e=>{
+  const t=e.target.closest('.tile');if(!t||done)return;
+  const i=+t.dataset.i;R.sel.has(i)?R.sel.delete(i):R.sel.add(i);t.classList.toggle('sel')
+});
+$('#hint').onclick=()=>{
+  if(R.hint||done)return;R.hint=true;if(!pr)S.score=Math.max(0,S.score-5);upd();$('#hint').disabled=true;
+  const fb=$('#fb');fb.hidden=false;fb.innerHTML='💡 '+explain();
+};
+$('#ok').onclick=()=>confirm_();
+function confirm_(){
+  if(done)return;done=true;clearInterval(tm);
+  const T=new Set(R.T);let c=0,w=0;
+  document.querySelectorAll('#grid .tile').forEach(t=>{
+    const i=+t.dataset.i,s=R.sel.has(i),g=T.has(i);t.classList.remove('sel');
+    if(s&&g){t.classList.add('ok');c++}else if(s){t.classList.add('bad');w++}else if(g)t.classList.add('miss');
+  });
+  const perfect=c===T.size&&w===0;
+  let p=0,pts='';
+  if(!pr){
+    p=c*10-w*5;
+    if(perfect){S.streak++;p+=10+Math.floor(left)+(S.streak>1?(S.streak-1)*5:0)}else S.streak=0;
+    p=Math.max(0,p);S.score+=p;S.st[R.mode][1]++;if(perfect)S.st[R.mode][0]++;upd();
+    pts=`<br><b>+${fa(p)} امتیاز</b> `;
+  }
+  const msg=perfect?`🎉 <strong>بی‌نقص!</strong> ${!pr&&S.streak>1?`(${fa(S.streak)} دور پشت‌سرهم 🔥)`:''}`:(R.sel.size===0?'⏰ <strong>جوابی ثبت نشد.</strong>':`🤔 <strong>${fa(c)} درست، ${fa(w)} اشتباه، ${fa(T.size-c)} جاافتاده</strong>`);
+  const last=!pr&&S.r>=TOTAL,lbl=last?'دیدن نتیجه 🏁':(pr&&S.p>=PR[S.m].length?'پایان تمرین ➜':(pr?'تمرین بعدی ➜':'دور بعد ➜'));
+  const fb=$('#fb');fb.hidden=false;
+  fb.innerHTML=`${msg}<br>${explain()}<br>✔ <b>جواب‌های درست:</b> ${R.T.map(i=>{const o=R.g[i];return `${o.n} (واقعی: ${C[o.r].n}، ظاهری: ${C[o.s].n})`}).join('، ')}${pts}<br><small style="color:var(--mute)">(✅ درست، ❌ اشتباه، ⭐ جاافتاده)</small><div style="text-align:center;margin-top:10px"><button class="btn" id="nx">${lbl}</button></div>`;
+  $('#acts').style.display='none';$('#nx').onclick=next;$('#nx').focus({preventScroll:true});
+}
+function end(){
+  clearInterval(tm);show('s2');
+  const s=S.score,rk=s>=450?['🏆','استاد انعطاف‌پذیری!']:s>=300?['⚡','ذهن چابک!']:s>=150?['🌱','در حال رشد!']:['💪','دوباره امتحان کن!'];
+  S.rk=rk[1];$('#smsg').textContent='';upRep();$('#rk').textContent=rk[0];$('#rt').textContent=rk[1];$('#fs').textContent=fa(s);$('#mn').textContent=MN[S.m];
+  const cols={real:'#ff5c8a',shown:'#2f7bff',mix:'#8b3dff'};
+  $('#stats').innerHTML=Object.keys(M).filter(k=>S.st[k][1]).map(k=>{const [p,t]=S.st[k],pc=Math.round(p/t*100);
+    return `<div class="st"><span>${M[k].ic} ${M[k].t}</span><span class="tr"><i style="width:${pc}%;background:${cols[k]}"></i></span><span>${fa(p)}/${fa(t)}</span></div>`}).join('');
+}
+let pend;
+const T=(m,r)=>m==='hard'?Math.max(14,30-r*1.4):Math.max(18,36-r*1.6);
+$('#kg').innerHTML=K.flatMap(k=>O.filter(o=>o.r===k)).map(o=>tile({...o,s:o.r})).join('');
+document.querySelectorAll('.mb').forEach(b=>b.onclick=()=>{pend=b.dataset.m;show('sK')});
+$('#kgo').onclick=()=>start(pend);
+$('#kback').onclick=()=>show('s0');
+
+
+
+$('#skip').onclick=()=>{clearInterval(tm);show('sT')};
+$('#main').onclick=()=>{S.ph='m';S.last=null;show('s1');next()};
+$('#again').onclick=()=>start(S.m);
+$('#chg').onclick=()=>show('s0');
+function rep(){
+  const n=$('#nm2').value.trim()||'(بدون نام)';
+  const L=['🍌 نتیجهٔ بازی موز آبی',`نام: ${n}`,`حالت: ${MN[S.m]}`,`امتیاز: ${fa(S.score)}`,`رتبه: ${S.rk}`];
+  Object.keys(M).filter(k=>S.st[k][1]).forEach(k=>L.push(`${M[k].t}: ${fa(S.st[k][0])} دور بی‌نقص از ${fa(S.st[k][1])}`));
+  L.push(`تاریخ: ${new Date().toLocaleDateString('fa-IR')}`);
+  return L.join('\n');
+}
+function upRep(){$('#rep').value=rep()}
+const say=t=>{$('#smsg').textContent=t};
+$('#nm2').oninput=upRep;
+$('#cpy').onclick=async()=>{
+  upRep();const t=$('#rep').value,ok='✅ کپی شد. حالا در پیام‌رسان برای معلم بچسبان.';
+  try{await navigator.clipboard.writeText(t);say(ok)}
+  catch(e){$('#rep').select();try{document.execCommand('copy')?say(ok):say('متن را انتخاب و کپی کن، یا از صفحه عکس بگیر و بفرست.')}catch(_){say('متن را انتخاب و کپی کن، یا از صفحه عکس بگیر و بفرست.')}}
+};
+$('#shr').onclick=async()=>{
+  upRep();
+  if(navigator.share){try{await navigator.share({text:$('#rep').value});return say('✅ ارسال شد.')}catch(e){if(e.name==='AbortError')return}}
+  $('#cpy').click();
+};
+</script>
+</body>
+</html>
